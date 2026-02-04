@@ -13,28 +13,25 @@ pub async fn poll_results(
 ) -> Result<()> {
     let response = poll_run_report(api_client, upload_result).await?;
 
-    let report = response
-        .run
-        .head_reports
-        .into_iter()
-        .next()
-        .ok_or_else(|| anyhow!("No head report found in the run report"))?;
+    let report = response.run.head_reports.into_iter().next();
 
-    if let Some(impact) = report.impact {
-        let rounded_impact = (impact * 100.0).round();
-        let impact_text = if impact > 0.0 {
-            style(format!("+{rounded_impact}%")).green().bold()
+    if let Some(report) = report {
+        if let Some(impact) = report.impact {
+            let rounded_impact = (impact * 100.0).round();
+            let impact_text = if impact > 0.0 {
+                style(format!("+{rounded_impact}%")).green().bold()
+            } else {
+                style(format!("{rounded_impact}%")).red().bold()
+            };
+
+            info!(
+                "Impact: {} (allowed regression: -{}%)",
+                impact_text,
+                (response.allowed_regression * 100.0).round()
+            );
         } else {
-            style(format!("{rounded_impact}%")).red().bold()
-        };
-
-        info!(
-            "Impact: {} (allowed regression: -{}%)",
-            impact_text,
-            (response.allowed_regression * 100.0).round()
-        );
-    } else {
-        info!("No impact detected, reason: {}", report.conclusion);
+            info!("No impact detected, reason: {}", report.conclusion);
+        }
     }
 
     if output_json {
