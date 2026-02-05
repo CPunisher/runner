@@ -7,8 +7,6 @@
 //
 // Environment variables:
 //   CODSPEED_BENCH_URI - The benchmark URI to report (required)
-//   CODSPEED_PRELOAD_LOCK - Set by the first process to prevent child processes
-//                          from re-initializing instrumentation
 
 #include <stdlib.h>
 #include <unistd.h>
@@ -21,8 +19,6 @@
 #warning "RUNNING_ON_VALGRIND not defined, headers may be missing"
 #define RUNNING_ON_VALGRIND 0
 #endif
-
-static const char *LOCK_ENV = "CODSPEED_PRELOAD_LOCK";
 
 // These constants are defined by the build script (build.rs) via -D flags
 #ifndef CODSPEED_URI_ENV
@@ -53,14 +49,6 @@ __attribute__((constructor)) static void codspeed_preload_init(void) {
   if (!RUNNING_ON_VALGRIND) {
     return;
   }
-
-  // Check if another process already owns the instrumentation
-  if (getenv(LOCK_ENV)) {
-    return;
-  }
-
-  // Set the lock to prevent child processes from initializing
-  setenv(LOCK_ENV, "1", 1);
 
   g_bench_uri = getenv(URI_ENV);
   if (!g_bench_uri) {
