@@ -102,7 +102,10 @@ impl JitDump {
 }
 
 /// Converts all the `jit-<pid>.dump` into unwind data and copies it to the profile folder.
-pub async fn harvest_perf_jit_for_pids(profile_folder: &Path, pids: &HashSet<i32>) -> Result<()> {
+pub async fn harvest_perf_jit_for_pids(
+    profile_folder: &Path,
+    pids: &HashSet<libc::pid_t>,
+) -> Result<()> {
     for pid in pids {
         let name = format!("jit-{pid}.dump");
         let path = PathBuf::from("/tmp").join(&name);
@@ -131,7 +134,7 @@ pub async fn harvest_perf_jit_for_pids(profile_folder: &Path, pids: &HashSet<i32
         };
 
         for module in unwind_data {
-            module.save_to(profile_folder, *pid as _)?;
+            module.save_to(profile_folder, *pid)?;
         }
     }
 

@@ -69,7 +69,6 @@ impl GenericFifo {
 pub struct FifoBenchmarkData {
     /// Name and version of the integration
     pub integration: Option<(String, String)>,
-    pub bench_pids: HashSet<pid_t>,
 }
 
 pub struct RunnerFifo {
@@ -255,10 +254,7 @@ impl RunnerFifo {
                     );
                     let marker_result =
                         ExecutionTimestamps::new(&bench_order_by_timestamp, &markers);
-                    let fifo_data = FifoBenchmarkData {
-                        integration,
-                        bench_pids,
-                    };
+                    let fifo_data = FifoBenchmarkData { integration };
                     return Ok((marker_result, fifo_data, exit_status));
                 }
                 Err(e) => return Err(anyhow::Error::from(e)),
