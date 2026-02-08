@@ -1,3 +1,22 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b812b341347175110729c744e6f07d8122eda0079ac9daf95f88dda9044699c0
-size 516
+---
+source: src/run_environment/github_actions/provider.rs
+expression: run_environment_metadata
+---
+{
+  "ref": "refs/pull/22/merge",
+  "headRef": "feat/codspeed-runner",
+  "baseRef": "main",
+  "owner": "my-org",
+  "repository": "adrien-python-test",
+  "event": "pull_request",
+  "sender": {
+    "id": "19605940",
+    "login": "adriencaccia"
+  },
+  "ghData": {
+    "runId": "6957110437",
+    "job": "log-env"
+  },
+  "glData": null,
+  "repositoryRootPath": "/home/runner/work/adrien-python-test/adrien-python-test/"
+}

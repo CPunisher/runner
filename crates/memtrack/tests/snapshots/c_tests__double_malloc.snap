@@ -1,3 +1,10 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:5c012736a07a2647759a9e2b911bdad5fa0235e67caff5b3193c52152b7e518d
-size 164
+---
+source: crates/memtrack/tests/c_tests.rs
+expression: formatted_events
+---
+[
+    "Malloc { size: 1024 }",
+    "Malloc { size: 2048 }",
+    "Free",
+    "Free",
+]

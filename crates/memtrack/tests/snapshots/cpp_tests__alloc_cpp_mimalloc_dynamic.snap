@@ -1,3 +1,14 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:33702691dfd6e60d557946e8ec2b4d429d72c922a5063545cdca267e3e94ff09
-size 272
+---
+source: crates/memtrack/tests/cpp_tests.rs
+expression: formatted_events
+---
+[
+    "Malloc { size: 44444 }",
+    "Free",
+    "Malloc { size: 8 }",
+    "Free",
+    "Malloc { size: 88888 }",
+    "Malloc { size: 32768 }",
+    "AlignedAlloc { size: 32768 }",
+    "Free",
+]

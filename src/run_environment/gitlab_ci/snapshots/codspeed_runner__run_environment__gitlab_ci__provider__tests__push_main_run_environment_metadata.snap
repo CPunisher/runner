@@ -1,3 +1,22 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:3872df94992d882b782d50ea6610479e639399c68a591e5661dc7ff4bc0feabd
-size 432
+---
+source: src/run_environment/gitlab_ci/provider.rs
+expression: run_environment_metadata
+---
+{
+  "ref": "refs/heads/main",
+  "headRef": null,
+  "baseRef": "main",
+  "owner": "owner",
+  "repository": "repository",
+  "event": "push",
+  "sender": {
+    "id": "1234567890",
+    "login": "actor"
+  },
+  "ghData": null,
+  "glData": {
+    "runId": "1234567890",
+    "job": "job"
+  },
+  "repositoryRootPath": "/builds/owner/repository"
+}

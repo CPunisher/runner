@@ -1,3 +1,16 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:6e83ce9d4112900c05b3081b7d063cb3af53cdfdc5051f4471cde2ed94b980d9
-size 288
+---
+source: crates/memtrack/tests/rust_tests.rs
+expression: formatted_events
+---
+[
+    "Malloc { size: 4321 }",
+    "Free",
+    "Calloc { size: 1234 }",
+    "Free",
+    "Malloc { size: 4 }",
+    "Free",
+    "Malloc { size: 1111 }",
+    "Free",
+    "Realloc { size: 2222 }",
+    "Free",
+]

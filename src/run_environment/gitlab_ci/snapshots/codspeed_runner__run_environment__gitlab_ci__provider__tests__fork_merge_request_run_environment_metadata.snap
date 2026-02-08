@@ -1,3 +1,22 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:af84cf9aa603ba88103a781849161d5d0a09c7896790655806ce5053b9da224a
-size 475
+---
+source: src/run_environment/gitlab_ci/provider.rs
+expression: run_environment_metadata
+---
+{
+  "ref": "refs/pull/5/merge",
+  "headRef": "fork-owner:feat/awesome-feature",
+  "baseRef": "main",
+  "owner": "owner",
+  "repository": "repository",
+  "event": "pull_request",
+  "sender": {
+    "id": "19605940",
+    "login": "actor"
+  },
+  "ghData": null,
+  "glData": {
+    "runId": "6957110437",
+    "job": "build-job"
+  },
+  "repositoryRootPath": "/builds/owner/repository"
+}
