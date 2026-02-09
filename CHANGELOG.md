@@ -5,6 +5,35 @@
 
 
 
+## [4.10.6] - 2026-02-09
+
+### <!-- 0 -->🚀 Features
+- Force necessary flags for `go run` in introspected go by @GuillaumeLagrange in [#238](https://github.com/CodSpeedHQ/runner/pull/238)
+- Bump the stack size for python by @GuillaumeLagrange
+- Make python generate perf maps in exec-harness analysis by @GuillaumeLagrange
+- Harvest python perf maps after parsing perf data by @GuillaumeLagrange
+- Allow memory instrument with exec-harness's integration hook by @GuillaumeLagrange
+- Use the new instrument-hooks bindings rather than codspeed core by @GuillaumeLagrange
+
+### <!-- 1 -->🐛 Bug Fixes
+- Panic if integration doesn't support memory profiling by @not-matthias in [#239](https://github.com/CodSpeedHQ/runner/pull/239)
+- Allow memtrack caching by resetting .cargo permissions by @not-matthias in [#237](https://github.com/CodSpeedHQ/runner/pull/237)
+- Search build directories in sub-folders by @not-matthias
+- Handle working-directory option by @not-matthias
+- Improve simulation script support and detect subprocesses by @GuillaumeLagrange
+
+### <!-- 2 -->🏗️ Refactor
+- Move common perf-map utility outside of valgrind helpers by @GuillaumeLagrange
+
+### <!-- 7 -->⚙️ Internals
+- Bump memtrack version
+- Add debug logs for harvested bench pids by @GuillaumeLagrange
+- Update wording in build.rs by @GuillaumeLagrange in [#235](https://github.com/CodSpeedHQ/runner/pull/235)
+- Use tokio::fs when harvesting perf maps from pids by @GuillaumeLagrange
+- Import instrument-hooks bindings from codspeed-rust by @GuillaumeLagrange
+- Move small snapshot files out of Git LFS by @art049
+
+
 ## [4.10.5] - 2026-02-06
 
 ### <!-- 0 -->🚀 Features
@@ -917,6 +946,7 @@
 - Add linting components to the toolchain by @art049
 
 
+[4.10.6]: https://github.com/CodSpeedHQ/runner/compare/v4.10.5..v4.10.6
 [4.10.5]: https://github.com/CodSpeedHQ/runner/compare/v4.10.4..v4.10.5
 [4.10.4]: https://github.com/CodSpeedHQ/runner/compare/v4.10.3..v4.10.4
 [4.10.3]: https://github.com/CodSpeedHQ/runner/compare/v4.10.2..v4.10.3
