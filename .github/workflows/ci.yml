@@ -76,7 +76,7 @@ jobs:
 
       # Since we ran the tests with sudo, the build artifacts will have root ownership
       - name: Clean up
-        run: sudo chown -R $USER:$USER .
+        run: sudo chown -R $USER:$USER . ~/.cargo
 
   benchmarks:
     runs-on: ubuntu-latest
