@@ -297,6 +297,7 @@ impl BenchmarkData {
         // maps from /tmp to the profile folder. We have to write our own perf
         // maps to these files AFTERWARDS, otherwise it'll be overwritten!
         let bench_pids = symbols_by_pid.keys().copied().collect();
+        debug!("Harvesting perf maps and jit dumps for pids: {bench_pids:?}");
         harvest_perf_maps_for_pids(path_ref, &bench_pids)
             .await
             .map_err(|e| {
