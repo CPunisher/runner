@@ -4,35 +4,64 @@ use std::path::{Path, PathBuf};
 
 use crate::allocators::{AllocatorKind, AllocatorLib};
 
-/// Walk upward from current directory to find build directories.
+/// Walk upward and downward from current directory to find build directories.
 /// Returns all found build directories in order of preference.
 fn find_build_dirs() -> Vec<PathBuf> {
     let mut dirs = Vec::new();
-    let Ok(mut current_dir) = std::env::current_dir() else {
+    let Ok(current_dir) = std::env::current_dir() else {
         return dirs;
     };
 
-    loop {
-        // Check for Cargo/Rust build directory
-        let cargo_analysis = current_dir.join("target").join("codspeed").join("analysis");
-        if cargo_analysis.is_dir() {
-            dirs.push(cargo_analysis);
+    let patterns = ["target/codspeed/analysis", "bazel-bin", "build"];
+    let mut check_patterns = |dir: &Path| {
+        for pattern in &patterns {
+            let path = dir.join(pattern);
+            if path.is_dir() {
+                dirs.push(path);
+            }
         }
+    };
 
-        // Check for Bazel build directory
-        let bazel_bin = current_dir.join("bazel-bin");
-        if bazel_bin.is_dir() {
-            dirs.push(bazel_bin);
-        }
+    // Walk upward from parent directories
+    // Note: We skip current_dir here since the downward walk (below) already checks it
+    let mut current = current_dir.clone();
+    while current.pop() {
+        check_patterns(&current);
+    }
 
-        // Check for CMake build directory
-        let cmake_build = current_dir.join("build");
-        if cmake_build.is_dir() {
-            dirs.push(cmake_build);
-        }
+    // Walk downward from current directory
+    let mut stack = vec![current_dir];
+    while let Some(dir) = stack.pop() {
+        check_patterns(&dir);
 
-        if !current_dir.pop() {
-            break;
+        // Read subdirectories
+        let Ok(entries) = fs::read_dir(&dir) else {
+            continue;
+        };
+
+        for entry in entries.filter_map(Result::ok) {
+            let path = entry.path();
+
+            let Some(name) = path.file_name().and_then(|n| n.to_str()) else {
+                continue;
+            };
+
+            // Skip hidden dirs and common excludes
+            if name.starts_with('.') || matches!(name, "node_modules" | "vendor" | "venv") {
+                continue;
+            }
+
+            // Don't recursive into dirs that we want to match.
+            // This can happen with `target` as it contains build dirs for statically linked crates.
+            if matches!(name, "target" | "bazel-bin" | "build") {
+                continue;
+            }
+
+            if path.is_file() {
+                continue;
+            }
+
+            stack.push(path);
         }
     }
 
