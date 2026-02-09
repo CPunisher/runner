@@ -149,13 +149,13 @@ impl PreloadBuildPaths {
     fn check_sources_exist(&self) {
         if !self.core_c.exists() {
             panic!(
-                "core.c not found at {}. Make sure the instrument-hooks-bindings crate is available.",
+                "core.c not found at {}. Make sure the instrument hooks submodule is available.",
                 self.core_c.display()
             );
         }
         if !self.includes_dir.exists() {
             panic!(
-                "includes directory not found at {}. Make sure the instrument-hooks-bindings crate is available.",
+                "includes directory not found at {}. instrument hooks submodule is available.",
                 self.includes_dir.display()
             );
         }
