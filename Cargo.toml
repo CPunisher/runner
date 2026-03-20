@@ -2,7 +2,7 @@
 name = "codspeed-runner"
 version = "4.12.1"
 edition = "2024"
-repository = "https://github.com/CodSpeedHQ/codspeed"
+repository = "https://github.com/CPunisher/runner"
 publish = false
 default-run = "codspeed"
 
